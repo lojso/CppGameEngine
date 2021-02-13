@@ -1,13 +1,18 @@
 #include <iostream>
-#include "lua/lua.hpp"
-#include <SDL.h>
+#include "./Game.h"
+#include "./Constants.h"
 
 int main(int argc, char *argv[]) {
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-        std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
-        return 1;
+    Game game;
+    game.Initialize(WINDOW_WIDTH, WINDOW_HEIGHT);
+
+    while (game.IsRunning()) {
+        game.ProcessInput();
+        game.Update();
+        game.Render();
     }
-    std::cout << "Hello, World!" << std::endl;
-    SDL_Quit();
+
+    game.Destroy();
+
     return 0;
 }
