@@ -1,6 +1,10 @@
 #include "Game.h"
 #include "Constants.h"
 #include "iostream"
+#include "EntityManager.h"
+
+EntityManager manager;
+SDL_Renderer* Game::renderer;
 
 Game::Game() {
     _isRunning = false;
@@ -14,11 +18,6 @@ Game::~Game() {
 bool Game::IsRunning() const {
     return _isRunning;
 }
-
-float projectionPosX = 0.0f;
-float projectionPosY = 0.0f;
-float projectileVelX = 20.0f;
-float projectileVelY = 30.0f;
 
 void Game::Initialize(int width, int height) {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -82,23 +81,11 @@ void Game::Update() {
     // Sets the new ticks for the current frame to be used in the next pass
     ticksLastFrame = SDL_GetTicks();
 
-    projectionPosX += projectileVelX * deltaTime;
-    projectionPosY += projectileVelY * deltaTime;
 }
 
 void Game::Render() {
     SDL_SetRenderDrawColor(renderer, 21, 21, 21, 255);
     SDL_RenderClear(renderer);
-
-    SDL_Rect projectile{
-            (int) projectionPosX,
-            (int) projectionPosY,
-            10,
-            10
-    };
-
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_RenderFillRect(renderer, &projectile);
 
     SDL_RenderPresent(renderer);
 }

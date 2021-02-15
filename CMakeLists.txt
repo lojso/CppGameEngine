@@ -14,5 +14,5 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(lib)
 add_subdirectory(lib/glm)
-add_executable(${PROJECT_NAME} src/main.cpp src/Game.cpp src/Game.h src/Constants.h)
+add_executable(${PROJECT_NAME} src/main.cpp src/Game.cpp src/Game.h src/Constants.h src/Component.h src/Entity.h src/Entity.cpp src/EntityManager.cpp src/EntityManager.h src/Components/TransformComponent.cpp src/Components/TransformComponent.h)
 target_link_libraries(${PROJECT_NAME} mingw32 SDL2main SDL2)

@@ -7,9 +7,10 @@ class Game {
 private:
     bool _isRunning;
     SDL_Window *window;
-    SDL_Renderer *renderer;
 
 public:
+    static SDL_Renderer *renderer;
+    void LoadLevel(int levelNumber);
     Game();
     ~Game();
     int ticksLastFrame;
