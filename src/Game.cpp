@@ -2,6 +2,7 @@
 #include "Constants.h"
 #include "iostream"
 #include "EntityManager.h"
+#include "Components/TransformComponent.h"
 
 EntityManager manager;
 SDL_Renderer* Game::renderer;
@@ -12,7 +13,6 @@ Game::Game() {
 }
 
 Game::~Game() {
-
 }
 
 bool Game::IsRunning() const {
@@ -43,7 +43,14 @@ void Game::Initialize(int width, int height) {
         std::cerr << "Error creating SDL renderer" << std::endl;
     }
 
+    LoadLevel(0);
+
     _isRunning = true;
+}
+
+void Game::LoadLevel(int levelNumber) {
+    Entity& newEntity(manager.AddEntity("projectile"));
+    newEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
 }
 
 void Game::ProcessInput() {
@@ -81,11 +88,18 @@ void Game::Update() {
     // Sets the new ticks for the current frame to be used in the next pass
     ticksLastFrame = SDL_GetTicks();
 
+    manager.Update(deltaTime);
 }
 
 void Game::Render() {
     SDL_SetRenderDrawColor(renderer, 21, 21, 21, 255);
     SDL_RenderClear(renderer);
+
+    if(manager.HasNoEntites()){
+        return;
+    }
+
+    manager.Render();
 
     SDL_RenderPresent(renderer);
 }
